@@ -118,7 +118,7 @@ export async function runPrimaryAsync(options: ConvertCommandCliArgs) {
       return;
     }
     interactiveLogger.pending(
-      `Processing batches - [${totalBatches - batches.length}/${totalBatches}]`
+      `Processing batches - [${totalBatches - batches.length - workers.length}/${totalBatches}] completed`
     );
   };
 
