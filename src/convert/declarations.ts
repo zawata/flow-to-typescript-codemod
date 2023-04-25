@@ -76,28 +76,6 @@ export function transformDeclarations({
         path.node.importKind = "value";
       }
 
-      // `import X from `foo.js` -> extension warning
-      if (path.node.source) {
-        const { value } = path.node.source;
-        const isJS = value.endsWith(".js");
-        const isJSX = value.endsWith(".jsx");
-        if (isJS || isJSX) {
-          reporter.importWithExtension(
-            state.config.filePath,
-            getLoc(path.node),
-            value
-          );
-        }
-
-        if (state.config.dropImportExtensions) {
-          if (isJS) {
-            path.node.source.value = value.slice(0, -3);
-          } else if (isJSX) {
-            path.node.source.value = value.slice(0, -4);
-          }
-        }
-      }
-
       // `import {...} from`
       if (path.node.specifiers) {
         for (const specifier of path.node.specifiers) {
