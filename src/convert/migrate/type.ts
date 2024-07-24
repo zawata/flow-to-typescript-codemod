@@ -694,6 +694,15 @@ function actuallyMigrateType(
         }
       }
 
+      // special case for direct type import
+      // `StatelessFunctionalComponent<T>` → `FunctionComponent`
+      if (id.type === "Identifier" && id.name === "StatelessFunctionalComponent") {
+        return t.tsTypeReference(
+          t.identifier("FunctionComponent"),
+          params
+        );
+      }
+
       // `React.Portal/Children/Etc<T>` → `React.ReactPortal/ReactChildren/Etc`
       if (
         id.type === "TSQualifiedName" &&

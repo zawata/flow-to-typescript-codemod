@@ -8,7 +8,7 @@ export const ReactTypes = {
   Portal: "ReactPortal",
   NodeArray: "ReactNodeArray",
   ElementProps: "ComponentProps",
-  StatelessFunctionalComponent: `FC`,
+  StatelessFunctionalComponent: "FunctionComponent",
 } as const;
 
 export const SyntheticEvents = {
