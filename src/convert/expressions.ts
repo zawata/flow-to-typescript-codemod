@@ -262,6 +262,11 @@ export function transformExpressions({
         );
       }
     },
+    MemberExpression(path) {
+      if (path.node.object.type === "Identifier" && path.node.object.name === "global") {
+        path.node.object.name = "globalThis"
+      }
+    }
   });
 }
 
