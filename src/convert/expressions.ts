@@ -240,6 +240,12 @@ export function transformExpressions({
         if (t.isStringLiteral(firstArgument)) {
           firstArgument.value = firstArgument.value.replace(/\.jsx?$/, "");
         }
+      } else if (
+        t.isIdentifier(path.node.callee) &&
+        path.node.callee.name === "connect" &&
+        path.node.typeParameters?.params?.length
+      ) {
+        delete path.node.typeParameters;
       }
     },
     NewExpression(path) {
