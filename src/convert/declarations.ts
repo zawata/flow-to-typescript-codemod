@@ -17,7 +17,7 @@ import { migrateQualifiedIdentifier } from "./migrate/qualified-identifier";
 import { annotateParamsWithFlowTypeAtPos } from "./flow/annotate-params";
 import { functionVisitor } from "./function-visitor";
 import { TransformerInput } from "./transformer";
-import { ReactTypes } from "./utils/type-mappings";
+import { ReactTypes, ReduxSagaTypes } from "./utils/type-mappings";
 import { flowTypeAtPos } from "./flow/type-at-pos";
 
 /**
@@ -62,6 +62,45 @@ const updateReactImports = (
   }
 };
 
+const updateReduxSagaImports = (
+  node: t.ImportDeclaration,
+  specifier: t.ImportSpecifier
+) => {
+  if (
+    node.source.value === "redux-saga" &&
+    (specifier.importKind === "type" || node.importKind === "type")
+  ) {
+
+    if (
+      specifier.type === "ImportSpecifier" &&
+      specifier.imported.type === "Identifier" &&
+      specifier.imported.name in ReduxSagaTypes
+    ) {
+      specifier.imported.name =
+        ReduxSagaTypes[specifier.imported.name as keyof typeof ReduxSagaTypes];
+    }
+
+    if (
+      specifier.type === "ImportSpecifier" &&
+      specifier.local.type === "Identifier" &&
+      specifier.local.name in ReduxSagaTypes
+    ) {
+      specifier.local.name =
+        ReduxSagaTypes[specifier.local.name as keyof typeof ReduxSagaTypes];
+    }
+
+    if (
+      specifier.type === "ImportSpecifier" &&
+      specifier.local.type === "Identifier" &&
+      specifier.imported.type === "Identifier" &&
+      specifier.imported.name === specifier.local.name
+    ) {
+      // @ts-expect-error local is not optional, but setting equal doesn't work
+      delete specifier.local;
+    }
+  }
+};
+
 export function transformDeclarations({
   reporter,
   state,
@@ -84,6 +123,7 @@ export function transformDeclarations({
             (specifier.importKind === "type" || path.node.importKind === "type")
           ) {
             updateReactImports(path.node, specifier);
+            updateReduxSagaImports(path.node, specifier);
 
             // `import {type X} from` => `import {X} from`
             if (specifier.importKind === "type") {

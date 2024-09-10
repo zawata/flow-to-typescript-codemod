@@ -30,3 +30,7 @@ export const SyntheticEvents = {
 export const MomentTypes = {
   MomentDuration: "Duration",
 } as const;
+
+export const ReduxSagaTypes = {
+  Saga: "SagaGenerator",
+} as const;

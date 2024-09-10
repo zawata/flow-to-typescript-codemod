@@ -745,6 +745,15 @@ function actuallyMigrateType(
         );
       }
 
+      // Saga<> => SagaGenerator
+      if (id.type === "Identifier" && id.name === "Saga") {
+        // @ts-ignore
+        return t.tsTypeReference(
+          t.identifier("SagaGenerator"),
+          params
+        );
+      }
+
       return t.tsTypeReference(id, params);
     }
 
