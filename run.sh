@@ -1,13 +1,13 @@
 #! /usr/bin/env sh
 
-REPO_ROOT=$(realpath ../repos/GitKraken)
+REPO_ROOT=$(realpath ../gitkraken-client)
 
 ignored_paths=(
     ${REPO_ROOT}/src/images \
     ${REPO_ROOT}/src/keyBindings \
     ${REPO_ROOT}/src/less \
     ${REPO_ROOT}/src/main/static \
-    ${REPO_ROOT}/src/main/uppgradeScripts \
+    ${REPO_ROOT}/src/main/upgradeScripts \
     ${REPO_ROOT}/src/menus \
     ${REPO_ROOT}/src/references \
     ${REPO_ROOT}/src/releaseNotes \
@@ -21,5 +21,7 @@ ignored_paths=(
 yarn typescriptify convert \
   --delete \
   --write \
+  --skipNoFlow \
+  --format=csv \
   -p ${REPO_ROOT}/src/ \
   --ignore ${ignored_paths[@]}
