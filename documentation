@@ -1,0 +1,27 @@
+Large Changes:
+  - redux-saga
+    - definitions are customized to match the flow definitions we were using
+    - Saga<> has been replaced with SagaGenerator<>
+      - Saga typically indicates a function that returns a Generator, I've created SagaGenerator to clarify this distinction
+  - reselect
+    - definitions are completely custom and ioncompatible with upstream definitions :/
+    - variadic selector definitions are a little wonky but are discouraged anyways.
+  - react
+    - `props: Props` should not be declared in Class-Components. this is not valid
+    - StatelessFunctionalComponent does not exist. it is now FC or FunctionComponent
+  - `global` has been replaced with `globalThis`. accessing non-standard properties on global will fail
+    - this does no apply to `window` which is typed as `Window & GlobalThis`
+
+dev environment changes:
+ - writing typed-code
+   - typescript does not have a concept of "inexact" objects. all objects are exact. the syntax {|...|} is not valid
+   - we have enums now!
+     - prefer using `enum` over `const enum`. const enums are not usable outside of the file they were declared in
+   - casts are done with the `as <Type>` syntax. flow-style type-casts(`(<var>: <type>)`) are not valid
+   - when declaring object or tuple literals, prefer using `as const` to increase specificity of the declared data
+   - the `{[key: <type>]: <type>}` is mostly served by `Record<key, value>` but some cirumstances require `Partial<Record<key, value>>` to indicate when the resulting value is epxected to exist based on the type/value of the key. we could enable noUncheckedIndexAccess to catch this in the future
+   - typescript Generics are far far better than
+ - development
+   - a separate flow-extension is no longer required, TS support is built into vscode
+   - types for packages can be installed from `@types/`. Community-maintained type packages comes from the (DefinitelyTyped Project)[https://github.com/DefinitelyTyped/DefinitelyTyped]
+   - `yarn flow` and `yarn flow:*` are now deprecated, use `yarn tsc` instead.
