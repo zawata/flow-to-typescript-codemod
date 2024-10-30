@@ -12,7 +12,6 @@ ignored_paths=(
     ${REPO_ROOT}/src/references \
     ${REPO_ROOT}/src/releaseNotes \
     ${REPO_ROOT}/src/render/static \
-    ${REPO_ROOT}/src/spec \
     ${REPO_ROOT}/src/strings \
     ${REPO_ROOT}/src/svg-icons \
     ${REPO_ROOT}/src/templates
@@ -22,6 +21,10 @@ yarn typescriptify convert \
   --delete \
   --write \
   --skipNoFlow \
+  --appendExtension \
+  --useStrictAnyFunctionType \
+  --useStrictAnyObjectType \
   --format=csv \
+  --output ${REPO_ROOT}/migration-report.csv \
   -p ${REPO_ROOT}/src/ \
   --ignore ${ignored_paths[@]}
