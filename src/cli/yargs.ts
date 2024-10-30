@@ -218,6 +218,11 @@ export const parseCommands = (
             default: false,
             describe: `Rename all files to TSX extensions, so that only one extension type is used in the codebase. This is helpful for projects that only used a single extension in Flow.`,
           })
+          .option("appendExtension", {
+            type: "boolean",
+            default: false,
+            describe: `Append the ts or tsx extension to the file name instead of replacing it`,
+          })
           .option("skipNoFlow", {
             type: "boolean",
             default: false,

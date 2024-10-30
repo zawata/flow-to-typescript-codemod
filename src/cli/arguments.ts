@@ -50,6 +50,8 @@ export interface ConvertCommandCliArgs extends SharedCommandCliArgs {
   ignore: Array<string>;
   // Force all file extensions to end in tsx
   forceTSX: boolean;
+  // Append the ts or tsx extension to the file name instead of replacing it
+  appendExtension: boolean;
   // Skip renaming @noflow annotated files
   skipNoFlow: boolean;
   // Disable Flow inference for performance

@@ -21,7 +21,7 @@ const standardTransformRunnerFactory = (transformer: Transformer) => {
 export const hasJsxTransformRunner: Transformer<void> = (
   transformerInput: TransformerInput
 ) => {
-  transformerInput.state.hasJsx = hasJSX(transformerInput);
+  transformerInput.state.hasJsx ||= hasJSX(transformerInput);
 };
 
 export const privateTypeTransformRunner: Transformer =

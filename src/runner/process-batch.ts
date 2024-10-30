@@ -64,8 +64,11 @@ export async function processBatchAsync(
           reporter.foundDeclarationFile(filePath);
           return;
         }
+
+        const hasJsx = filePath.endsWith(".jsx");
+
         const state: State = {
-          hasJsx: false,
+          hasJsx,
           usedUtils: false,
           config: {
             filePath,
@@ -112,10 +115,20 @@ export async function processBatchAsync(
                 path.normalize(options.target)
               );
 
-        const tsFilePath = targetFilePath.replace(
-          /\.jsx?$/,
-          state.hasJsx || options.forceTSX ? ".tsx" : ".ts"
-        );
+        const getNewFilePath = (filePath: string): string => {
+          if (options.appendExtension) {
+            return state.hasJsx || options.forceTSX
+              ? filePath + ".tsx"
+              : filePath + ".ts";
+          } else {
+            return filePath.replace(
+              /\.jsx?$/,
+              state.hasJsx || options.forceTSX ? ".tsx" : ".ts"
+            );
+          }
+        }
+
+        const tsFilePath = getNewFilePath(filePath);
 
         if (isTestFile) {
           const fileName = path.basename(filePath);
