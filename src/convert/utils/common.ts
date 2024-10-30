@@ -239,7 +239,6 @@ export const GlobalTypes = {
   ImmediateID: "number",
   immediateID: "number",
   AnimationFrameID: "number",
-  RequestOptions: "RequestInit",
 } as const;
 
 export const LiteralTypes = {
