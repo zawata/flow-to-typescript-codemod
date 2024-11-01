@@ -1,5 +1,7 @@
 /* eslint-disable */
 
+// this must be run on node 22+
+
 const fs = require('fs');
 const { EOL } = require("os");
 
