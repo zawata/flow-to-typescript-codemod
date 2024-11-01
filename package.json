@@ -68,7 +68,7 @@
     "recast": "^0.20.4",
     "signale": "^1.4.0",
     "ts-jest": "^26.0.0",
-    "ts-morph": "^13.0.2",
+    "ts-morph": "22.0.0",
     "typescript": "4.5.2",
     "yargs": "^17.2.1"
   },

@@ -3,7 +3,6 @@ import { FixCommandState, getDiagnostics } from "../state";
 import { FixCommandCliArgs } from "../../cli/arguments";
 import { logger } from "../../runner/logger";
 import { isDiagnosticSuppressible } from "../insuppressible-errors";
-import { diagnosticToDescription } from "./diagnostic-to-description";
 import { CommentToMake, CommentType } from "./shared";
 
 interface Metrics {
@@ -13,7 +12,7 @@ interface Metrics {
 function makeComment({
   commentType,
   jiraSlug,
-  diagnostics,
+  diagnostics: _diagnostics,
   annotation = "@ts-expect-error",
 }: {
   commentType: CommentType;
@@ -22,11 +21,9 @@ function makeComment({
   annotation?: string;
 }): string {
   // If jira slug was not specified, don't include anything
-  const fullJiraSlug = jiraSlug === "" ? "" : ` [${jiraSlug}]`;
+  const fullJiraSlug = jiraSlug === "" ? "" : ` - ${jiraSlug}`;
 
-  const commentText = `${annotation}${fullJiraSlug} - ${diagnostics
-    .map((diagnostic) => diagnosticToDescription(diagnostic))
-    .join(" | ")}`;
+  const commentText = `${annotation}${fullJiraSlug}`;
 
   if (commentType === CommentType.Jsx) {
     return `{ /* ${commentText} */}\n`;
