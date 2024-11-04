@@ -1,0 +1,18 @@
+conversion process:
+ - cherry pick typescript configuration
+ - cherry-pick manually converted commits (these end at ts/config which can be rebased)
+ - run codemod (scripts/convert.sh)
+ - split conversion into migration and rename commits
+   - process for doing this is kinda hard. see scripts/branchify.sh for the process
+ - cherry-pick manual fixes
+ - run yarn lint:fix
+ - cherry-pick lint fixes
+   - manual lint fixes
+   - auto-suppress remaining lint issues
+   - reflow eslint-disable-line comments because prettier will screw them up(see scripts/fixEslintComments.js)
+ - cherry-pick type fixes
+ - cherry-pick pre-prettier fixes
+ - cherry-pick pre-typescript-autosuppress issues
+ - yarn prettier:fix
+ - run TS autosuppress(scripts/autosuppress.sh)
+ - yarn prettier:fix again(because TS autosuppress will add some bad formatting)
